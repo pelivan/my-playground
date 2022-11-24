@@ -1,3 +1,4 @@
+const logger = require("./logger");
 const execute = require("child_process").exec;
 const alert = require("alert");
 const prompt = require("prompt-sync")();
@@ -17,5 +18,7 @@ if (
   alert("File extension is not supported.");
 }
 
-console.log(`Path is ${path}`);
-console.log(`Extension is ${ext}`);
+logger.appLogger.log(
+  "info",
+  `Success! \n Path is: ${path} \n Extension is: ${ext}`
+);
