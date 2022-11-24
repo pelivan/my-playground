@@ -5,14 +5,9 @@ const prompt = require("prompt-sync")();
 
 const path = prompt("Please enter path to your file: ");
 const ext = path.split(".").slice(1).join(".");
+const supportedExt = ["txt", "png", "jpg", "wav", "mp3"];
 
-if (
-  ext === "txt" ||
-  ext === "png" ||
-  ext === "jpg" ||
-  ext === "wav" ||
-  ext === "mp3"
-) {
+if (supportedExt.includes(ext)) {
   execute(path);
 } else {
   alert("File extension is not supported.");
