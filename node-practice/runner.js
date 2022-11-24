@@ -20,7 +20,4 @@ if (supportedExt.includes(ext)) {
   alert("File extension is not supported.");
 }
 
-logger.appLogger.log(
-  "info",
-  `Success! \n Path is: ${path} \n Extension is: ${ext}`
-);
+logger.log("info", `Success! \n Path is: ${path} \n Extension is: ${ext}`);
