@@ -14,6 +14,15 @@ export default function App({ Component, pageProps }: AppProps) {
   const [typeOfAnimal, setTypeOfAnimal] = useState<AnimalType | undefined>(
     AnimalType.NONE
   );
+  const deleteBird = (name: string) => {
+    setBirdData(birdData.filter((bird) => bird.name !== name));
+  };
+  const deleteFish = (name: string) => {
+    setFishData(fishData.filter((fish) => fish.name !== name));
+  };
+  const deleteMammal = (name: string) => {
+    setMammalData(mammalData.filter((mammal) => mammal.name !== name));
+  };
   return (
     <>
       <AnimalContext.Provider
@@ -35,6 +44,9 @@ export default function App({ Component, pageProps }: AppProps) {
           addMammal: (mammal) => {
             setMammalData([...mammalData, mammal]);
           },
+          deleteBird,
+          deleteFish,
+          deleteMammal,
         }}
       >
         <Component {...pageProps} />;

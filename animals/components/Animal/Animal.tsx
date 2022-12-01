@@ -9,20 +9,6 @@ function Animal() {
   const { birdData, fishData, mammalData, typeOfAnimal } =
     useContext(AnimalContext);
 
-  console.log(birdData);
-
-  // useEffect(() => {
-  //   if (typeOfAnimal === "bird") {
-  //     setBirds((birds) => [...birds, state.birdData]);
-  //   }
-  //   if (typeOfAnimal === "fish") {
-  //     setFish((fish) => [...fish, state.fishData]);
-  //   }
-  //   if (typeOfAnimal === "mammal") {
-  //     setMammals((mammals) => [...mammals, state.mammalData]);
-  //   }
-  // }, [state.birdData, state.fishData, state.mammalData]);
-
   return (
     <div className="flex  flex-col">
       <Form />

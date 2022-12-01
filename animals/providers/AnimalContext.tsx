@@ -8,6 +8,9 @@ interface AnimalContext {
   addBird: (data: Bird) => void;
   addFish: (data: Fish) => void;
   addMammal: (data: Mammal) => void;
+  deleteBird: (data: string) => void;
+  deleteFish: (data: string) => void;
+  deleteMammal: (data: string) => void;
   typeOfAnimal: AnimalType | undefined;
   birdData: Bird[];
   fishData: Fish[];
@@ -23,4 +26,7 @@ export const AnimalContext = createContext<AnimalContext>({
   addFish() {},
   addMammal() {},
   setAnimalType() {},
+  deleteBird() {},
+  deleteFish() {},
+  deleteMammal() {},
 });
