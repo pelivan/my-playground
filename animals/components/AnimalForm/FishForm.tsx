@@ -1,30 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FishWaterType, FishColorType } from "../../models/constants";
 import Checkbox from "../BaseComponents/Checkbox";
 import Dropdown from "../BaseComponents/Dropdown";
 
-function FishForm() {
-  const [waterType, setWaterType] = useState("");
-  const [colorType, setColorType] = useState("");
+type FishFormProps = {
+  getFishData: CallableFunction;
+};
 
-  const getWaterType = (data: React.SetStateAction<string>) => {
-    setWaterType(data);
-  };
-  const getColorType = (data: React.SetStateAction<string>) => {
-    setColorType(data);
-  };
+function FishForm({ getFishData }: FishFormProps) {
+  const [fishData, setFishdata] = useState({
+    isEatable: false,
+    livesIn: FishWaterType.SALTWATER,
+    colorType: FishColorType.WHITE,
+  });
+
+  useEffect(() => {
+    getFishData(fishData);
+  }, [fishData]);
+
   return (
     <div>
-      <Checkbox label={"Is this fish eatable?"} />
+      <Checkbox
+        label={"Is this fish eatable?"}
+        getCheckBox={(isEatable) => {
+          setFishdata({
+            ...fishData,
+            isEatable,
+          });
+        }}
+      />
       <Dropdown
         dataToMap={FishWaterType}
         label={"This fish lives in: "}
-        func={getWaterType}
+        func={(livesIn) => {
+          setFishdata({
+            ...fishData,
+            livesIn,
+          });
+        }}
       />
       <Dropdown
         dataToMap={FishColorType}
         label={"Color of this fish is: "}
-        func={getColorType}
+        func={(colorType) => {
+          setFishdata({
+            ...fishData,
+            colorType,
+          });
+        }}
       />
     </div>
   );

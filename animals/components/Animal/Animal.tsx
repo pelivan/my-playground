@@ -1,25 +1,34 @@
-import { mammalsData, birdsData, fishData } from "../../data/animals";
 import DisplayBird from "./Bird";
 import DisplayFish from "./Fish";
 import DisplayMammal from "./Mammal";
 import Form from "../AnimalForm/AnimalForm";
-import { useState } from "react";
+import { useContext, useEffect } from "react";
+import { AnimalContext } from "../../providers/AnimalContext";
 
 function Animal() {
-  const [mammals, setMammals] = useState(mammalsData);
-  const [birds, setBirds] = useState(birdsData);
-  const [fish, setFish] = useState(fishData);
-  const getData = (data: string[]) => {
-    console.log(data);
-    setBirds(data);
-  };
+  const { birdData, fishData, mammalData, typeOfAnimal } =
+    useContext(AnimalContext);
+
+  console.log(birdData);
+
+  // useEffect(() => {
+  //   if (typeOfAnimal === "bird") {
+  //     setBirds((birds) => [...birds, state.birdData]);
+  //   }
+  //   if (typeOfAnimal === "fish") {
+  //     setFish((fish) => [...fish, state.fishData]);
+  //   }
+  //   if (typeOfAnimal === "mammal") {
+  //     setMammals((mammals) => [...mammals, state.mammalData]);
+  //   }
+  // }, [state.birdData, state.fishData, state.mammalData]);
 
   return (
     <div className="flex  flex-col">
-      <Form onSubmit={getData} />
-      <div className="flex justify-evenly flex-auto">
+      <Form />
+      <div className="flex justify-evenly flex-auto ">
         <div>
-          {birds.map((bird, key) => (
+          {birdData.map((bird, key) => (
             <DisplayBird
               key={key}
               hasFeather={bird.hasFeather}
@@ -32,7 +41,7 @@ function Animal() {
           ))}
         </div>
         <div>
-          {fish.map((sFish, key) => (
+          {fishData.map((sFish, key) => (
             <DisplayFish
               key={key}
               livesIn={sFish.livesIn}
@@ -46,7 +55,7 @@ function Animal() {
           ))}
         </div>
         <div>
-          {mammals.map((mammal, key) => (
+          {mammalData.map((mammal, key) => (
             <DisplayMammal
               key={key}
               hasHair={mammal.hasHair}

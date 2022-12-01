@@ -9,7 +9,7 @@ function DisplayBird({
   canFly,
 }: Bird) {
   return (
-    <div className="bg-orange-400 rounded-lg">
+    <div className="bg-orange-400 rounded-lg box-content h-100 w-100 p-4 border-4 mt-10">
       <ul>
         <h1 className="text-white text-3xl">{name}</h1>
         <p>{canFly && "This animal can fly."}</p>

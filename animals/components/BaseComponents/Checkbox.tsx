@@ -1,11 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 type CheckboxProps = {
   label: string;
+  getCheckBox: (value: boolean) => void;
 };
 
-function Checkbox({ label }: CheckboxProps) {
+function Checkbox({ label, getCheckBox }: CheckboxProps) {
   const [isChecked, setIsChecked] = useState(false);
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    getCheckBox(isChecked);
+  };
   return (
     <div className="mt-5">
       <label>
@@ -14,6 +19,7 @@ function Checkbox({ label }: CheckboxProps) {
           type="checkbox"
           checked={isChecked}
           onChange={() => setIsChecked((prev) => !prev)}
+          onInput={onChangeHandler}
         />
       </label>
     </div>

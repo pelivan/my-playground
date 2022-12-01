@@ -1,4 +1,5 @@
 export enum AnimalType {
+  NONE = "none",
   MAMMAL = "mammal",
   FISH = "fish",
   BIRD = "bird",

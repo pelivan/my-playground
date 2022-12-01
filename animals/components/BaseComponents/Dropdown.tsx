@@ -8,7 +8,6 @@ type DropdownProps = {
 };
 
 function Dropdown({ dataToMap, label, func }: DropdownProps) {
-  console.log("Data to map" + dataToMap);
   const onChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
     func(event.target.value as AnimalType);

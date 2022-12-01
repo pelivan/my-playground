@@ -1,20 +1,95 @@
-import React, { useState } from "react";
-import { AnimalType } from "../../models/constants";
+import React, { useContext, useState } from "react";
+import {
+  AnimalType,
+  FishColorType,
+  FishWaterType,
+} from "../../models/constants";
+import {
+  Bird,
+  Fish,
+  isBird,
+  isFish,
+  isMammal,
+  Mammal,
+} from "../../models/animal.interface";
 import Checkbox from "../BaseComponents/Checkbox";
 import Dropdown from "../BaseComponents/Dropdown";
 import TextInput from "../BaseComponents/TextInput";
 import BirdForm from "./BirdForm";
 import FishForm from "./FishForm";
 import MammalForm from "./MammalForm";
+import { AnimalContext } from "../../providers/AnimalContext";
 
 function Form() {
   const [open, setOpenForm] = useState(false);
-  const [animalName, setAnimalName] = useState<string | undefined>();
-  const [animalType, setAnimalType] = useState<AnimalType | undefined>();
+  const [animalType, setAnimalType] = useState<AnimalType>();
   const openForm = () => setOpenForm(!open);
+  const contextValue = useContext(AnimalContext);
 
-  const getSpecies = (data: React.SetStateAction<AnimalType | undefined>) => {
+  const [animalForm, setAnimalForm] = useState<Bird | Fish | Mammal>({
+    canFly: false,
+    isEatable: false,
+    colorType: FishColorType.WHITE,
+    hasFeather: false,
+    hasHair: false,
+    isBarking: false,
+    isDeadly: false,
+    isDomestic: false,
+    isExtinct: false,
+    livesIn: FishWaterType.SALTWATER,
+    name: "",
+  });
+
+  const handleAnimalTypeSelect = (data: AnimalType | undefined) => {
     setAnimalType(data);
+    contextValue.setAnimalType(data);
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log(animalForm);
+
+    switch (animalType) {
+      case AnimalType.BIRD:
+        if (isBird(animalForm)) {
+          contextValue.addBird({
+            canFly: animalForm.canFly,
+            hasFeather: animalForm.hasFeather,
+            isDeadly: animalForm.isDeadly,
+            isDomestic: animalForm.isDomestic,
+            isExtinct: animalForm.isExtinct,
+            name: animalForm.name,
+          });
+        }
+        break;
+
+      case AnimalType.FISH:
+        if (isFish(animalForm)) {
+          contextValue.addFish({
+            name: animalForm.name,
+            isExtinct: animalForm.isExtinct,
+            isDeadly: animalForm.isDeadly,
+            isDomestic: animalForm.isDomestic,
+            livesIn: animalForm.livesIn,
+            isEatable: animalForm.isEatable,
+            colorType: animalForm.colorType,
+          });
+        }
+        break;
+      case AnimalType.MAMMAL:
+        if (isMammal(animalForm)) {
+          contextValue.addMammal({
+            name: animalForm.name,
+            isExtinct: animalForm.isExtinct,
+            isDeadly: animalForm.isDeadly,
+            isDomestic: animalForm.isDomestic,
+            hasHair: animalForm.hasHair,
+            numberOfLegs: animalForm.numberOfLegs,
+            isBarking: animalForm.isBarking,
+          });
+        }
+        break;
+    }
   };
 
   return (
@@ -26,23 +101,104 @@ function Form() {
         Add new animal
       </button>
       {open && (
-        <form>
+        <form onSubmit={handleSubmit}>
           <Dropdown
             dataToMap={AnimalType}
             label={"Select species that you want to add: "}
-            func={getSpecies}
+            func={handleAnimalTypeSelect}
           />
-          <TextInput
-            name={"Enter name of animal"}
-            value={animalName}
-            setValue={setAnimalName}
+          {animalType && (
+            <>
+              <TextInput
+                name={"Enter name of animal"}
+                value={animalForm.name}
+                setValue={(name) => {
+                  setAnimalForm({
+                    ...animalForm,
+                    name,
+                  });
+                }}
+              />
+              <Checkbox
+                label={"Is this animal extinct?"}
+                getCheckBox={(isExtinct) => {
+                  setAnimalForm({
+                    ...animalForm,
+                    isExtinct,
+                  });
+                }}
+              />
+              <Checkbox
+                label={"Is this animal deadly?"}
+                getCheckBox={(isDeadly) => {
+                  setAnimalForm({
+                    ...animalForm,
+                    isDeadly,
+                  });
+                }}
+              />
+              <Checkbox
+                label={"Is this animal domestic?"}
+                getCheckBox={(isDomestic) => {
+                  setAnimalForm({
+                    ...animalForm,
+                    isDomestic,
+                  });
+                }}
+              />
+              {animalType === AnimalType.FISH && (
+                <FishForm
+                  getFishData={(fishData: {
+                    isEatable: boolean;
+                    livesIn: FishWaterType;
+                    colorType: FishColorType;
+                  }) => {
+                    setAnimalForm({
+                      ...animalForm,
+                      isEatable: fishData.isEatable,
+                      livesIn: fishData.livesIn,
+                      colorType: fishData.colorType,
+                    });
+                  }}
+                />
+              )}
+              {animalType === AnimalType.BIRD && (
+                <BirdForm
+                  getBirdData={(birdData: {
+                    hasFeather: boolean;
+                    canFly: boolean;
+                  }) => {
+                    setAnimalForm({
+                      ...animalForm,
+                      hasFeather: birdData.hasFeather,
+                      canFly: birdData.canFly,
+                    });
+                  }}
+                />
+              )}
+              {animalType === AnimalType.MAMMAL && (
+                <MammalForm
+                  getMammalData={(mammalData: {
+                    hasHair: boolean;
+                    isBarking: boolean;
+                    numberOfLegs: number;
+                  }) => {
+                    setAnimalForm({
+                      ...animalForm,
+                      hasHair: mammalData.hasHair,
+                      isBarking: mammalData.isBarking,
+                      numberOfLegs: mammalData.numberOfLegs,
+                    });
+                  }}
+                />
+              )}
+            </>
+          )}
+          <input
+            className="mt-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            type="submit"
+            value="Submit"
           />
-          <Checkbox label={"Is this animal extinct?"} />
-          <Checkbox label={"Is this animal deadly?"} />
-          <Checkbox label={"Is this animal domestic?"} />
-          {animalType === "fish" && <FishForm />}
-          {animalType === "bird" && <BirdForm />}
-          {animalType === "mammal" && <MammalForm />}
         </form>
       )}
     </div>

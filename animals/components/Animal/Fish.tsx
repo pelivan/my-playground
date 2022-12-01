@@ -2,7 +2,7 @@ import { Fish } from "../../models/animal.interface";
 
 function DisplayFish(props: Fish) {
   return (
-    <div className="bg-cyan-600 rounded-lg">
+    <div className="bg-cyan-600 rounded-lg box-content h-100 w-100 p-4 border-4 mt-10">
       <ul>
         <h1 className="text-white text-3xl">{props.name}</h1>
         <p>{props.isExtinct && "This animal is extinct."}</p>

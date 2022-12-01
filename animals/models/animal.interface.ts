@@ -23,3 +23,15 @@ export interface Bird extends Animal {
   hasFeather: boolean;
   canFly: boolean;
 }
+
+export function isBird(animal: Animal): animal is Bird {
+  return (animal as Bird).canFly !== undefined;
+}
+
+export function isFish(animal: Animal): animal is Fish {
+  return (animal as Fish).livesIn !== undefined;
+}
+
+export function isMammal(animal: Animal): animal is Mammal {
+  return (animal as Mammal).isBarking !== undefined;
+}
