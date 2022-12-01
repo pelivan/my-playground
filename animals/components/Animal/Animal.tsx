@@ -2,12 +2,11 @@ import DisplayBird from "./Bird";
 import DisplayFish from "./Fish";
 import DisplayMammal from "./Mammal";
 import Form from "../AnimalForm/AnimalForm";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AnimalContext } from "../../providers/AnimalContext";
 
 function Animal() {
-  const { birdData, fishData, mammalData, typeOfAnimal } =
-    useContext(AnimalContext);
+  const { birdData, fishData, mammalData } = useContext(AnimalContext);
 
   return (
     <div className="flex  flex-col">

@@ -105,7 +105,7 @@ function Form() {
           <Dropdown
             dataToMap={AnimalType}
             label={"Select species that you want to add: "}
-            func={handleAnimalTypeSelect}
+            animalTypeHandler={handleAnimalTypeSelect}
           />
           {animalType && (
             <>

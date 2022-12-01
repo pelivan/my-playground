@@ -1,16 +1,16 @@
 import React from "react";
-import { AnimalType, FishColorType } from "../../models/constants";
+import { AnimalType } from "../../models/constants";
 
 type DropdownProps = {
   dataToMap: Record<string, string>;
   label: string;
-  func: (value: AnimalType | undefined) => void;
+  animalTypeHandler: CallableFunction;
 };
 
-function Dropdown({ dataToMap, label, func }: DropdownProps) {
+function Dropdown({ dataToMap, label, animalTypeHandler }: DropdownProps) {
   const onChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
-    func(event.target.value as AnimalType);
+    animalTypeHandler(event.target.value as AnimalType);
   };
   return (
     <div className="mt-5">

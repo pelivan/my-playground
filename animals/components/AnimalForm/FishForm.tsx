@@ -32,7 +32,7 @@ function FishForm({ getFishData }: FishFormProps) {
       <Dropdown
         dataToMap={FishWaterType}
         label={"This fish lives in: "}
-        func={(livesIn) => {
+        animalTypeHandler={(livesIn: FishWaterType) => {
           setFishdata({
             ...fishData,
             livesIn,
@@ -42,7 +42,7 @@ function FishForm({ getFishData }: FishFormProps) {
       <Dropdown
         dataToMap={FishColorType}
         label={"Color of this fish is: "}
-        func={(colorType) => {
+        animalTypeHandler={(colorType: FishColorType) => {
           setFishdata({
             ...fishData,
             colorType,

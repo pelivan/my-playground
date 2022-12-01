@@ -1,4 +1,3 @@
-import Animal from "./Animal";
 import { Mammal } from "../../models/animal.interface";
 import { useContext } from "react";
 import { AnimalContext } from "../../providers/AnimalContext";
