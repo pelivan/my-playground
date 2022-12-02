@@ -1,6 +1,7 @@
 import { type } from "os";
 
 type Animal = {
+  id: string;
   name: string;
   isExtinct: boolean;
   isDeadly: boolean;

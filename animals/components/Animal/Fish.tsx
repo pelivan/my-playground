@@ -3,6 +3,7 @@ import { Fish } from "../../models/animal.interface";
 import { AnimalContext } from "../../providers/AnimalContext";
 
 function DisplayFish({
+  id,
   livesIn,
   isEatable,
   colorType,
@@ -13,13 +14,13 @@ function DisplayFish({
 }: Fish) {
   const { deleteFish } = useContext(AnimalContext);
   return (
-    <div className="bg-cyan-600 rounded-lg box-content h-100 w-100 p-4 border-4 mt-10">
+    <div className="bg-cyan-600  rounded-lg box-content h-100 w-60 p-4 border-4 mt-10 ">
       <button
         onClick={() => {
-          deleteFish(name);
+          deleteFish(id);
         }}
         type="button"
-        className="bg-white rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+        className="animal-button"
       >
         <svg
           className="h-6 w-6"
@@ -32,14 +33,22 @@ function DisplayFish({
           <path d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-      <ul>
-        <h1 className="text-white text-3xl">{name}</h1>
-        <p>{isExtinct && "This animal is extinct."}</p>
-        <p>{isDeadly && "This animal is deadly."}</p>
-        <p>{isDomestic && "This animal is domestic."}</p>
-        <p>{livesIn && `This animal lives in ${livesIn}`}</p>
-        <p>{isEatable && "This animal is eatable."}</p>
-        <p>{colorType && `This animal is ${colorType} color.`}</p>
+      <ul className="text-center">
+        <h1 className="animal-name">{name}</h1>
+        {isExtinct && <p className="animal-prop">This animal is extinct.</p>}
+        {isDeadly && <p className="animal-prop">This animal is deadly.</p>}
+
+        {isDomestic && <p className="animal-prop">This animal is domestic. </p>}
+
+        {livesIn && (
+          <p className="animal-prop">{`This animal lives in ${livesIn}`} </p>
+        )}
+
+        {isEatable && <p className="animal-prop">This animal is eatable.</p>}
+
+        {colorType && (
+          <p className="animal-prop">{`This animal is ${colorType} color.`} </p>
+        )}
       </ul>
     </div>
   );

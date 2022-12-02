@@ -4,6 +4,8 @@ import DisplayMammal from "./Mammal";
 import Form from "../AnimalForm/AnimalForm";
 import { useContext } from "react";
 import { AnimalContext } from "../../providers/AnimalContext";
+import { v4 as uuidv4 } from "uuid";
+import DeleteAnimals from "../AnimalForm/DeleteAnimals";
 
 function Animal() {
   const { birdData, fishData, mammalData } = useContext(AnimalContext);
@@ -11,6 +13,8 @@ function Animal() {
   return (
     <div className="flex  flex-col">
       <Form />
+      <DeleteAnimals />
+
       <div className="flex justify-evenly flex-auto ">
         <div>
           {birdData.map((bird, key) => (
@@ -22,6 +26,7 @@ function Animal() {
               isDeadly={bird.isDeadly}
               isDomestic={bird.isDomestic}
               name={bird.name}
+              id={bird.id}
             />
           ))}
         </div>
@@ -36,6 +41,7 @@ function Animal() {
               isDeadly={sFish.isDeadly}
               isDomestic={sFish.isDomestic}
               name={sFish.name}
+              id={sFish.id}
             />
           ))}
         </div>
@@ -50,6 +56,7 @@ function Animal() {
               isDeadly={mammal.isDeadly}
               isDomestic={mammal.isDomestic}
               name={mammal.name}
+              id={mammal.id}
             />
           ))}
         </div>

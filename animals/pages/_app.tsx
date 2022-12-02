@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import { AnimalContext } from "../providers/AnimalContext";
 
 import type { AppProps } from "next/app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimalType } from "../models/constants";
 import { Bird, Mammal, Fish } from "../models/animal.interface";
 import { birdsData, fishData as fData, mammalsData } from "../data/animals";
@@ -14,15 +14,41 @@ export default function App({ Component, pageProps }: AppProps) {
   const [typeOfAnimal, setTypeOfAnimal] = useState<AnimalType | undefined>(
     AnimalType.NONE
   );
-  const deleteBird = (name: string) => {
-    setBirdData(birdData.filter((bird) => bird.name !== name));
+  const deleteBird = (id: string) => {
+    const filteredBirds = birdData.filter((bird) => bird.id !== id);
+    setBirdData(filteredBirds);
+    localStorage.setItem("birds", JSON.stringify(filteredBirds));
   };
-  const deleteFish = (name: string) => {
-    setFishData(fishData.filter((fish) => fish.name !== name));
+  const deleteFish = (id: string) => {
+    const filteredFish = fishData.filter((fish) => fish.id !== id);
+    setFishData(filteredFish);
+    localStorage.setItem("fish", JSON.stringify(filteredFish));
   };
-  const deleteMammal = (name: string) => {
-    setMammalData(mammalData.filter((mammal) => mammal.name !== name));
+  const deleteMammal = (id: string) => {
+    const filteredMammal = mammalData.filter((mammal) => mammal.id !== id);
+    setMammalData(filteredMammal);
+    localStorage.setItem("mammal", JSON.stringify(filteredMammal));
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("birds")) {
+      setBirdData(JSON.parse(localStorage.getItem("birds")!));
+    } else {
+      localStorage.setItem("birds", JSON.stringify(birdData));
+    }
+    if (localStorage.getItem("fish")) {
+      setFishData(JSON.parse(localStorage.getItem("fish")!));
+    } else {
+      localStorage.setItem("fish", JSON.stringify(fishData));
+    }
+
+    if (localStorage.getItem("mammal")) {
+      setMammalData(JSON.parse(localStorage.getItem("mammal")!));
+    } else {
+      localStorage.setItem("mammal", JSON.stringify(mammalData));
+    }
+  }, []);
+
   return (
     <>
       <AnimalContext.Provider
@@ -37,19 +63,25 @@ export default function App({ Component, pageProps }: AppProps) {
           },
           addBird: (bird) => {
             setBirdData([...birdData, bird]);
+            localStorage.setItem("birds", JSON.stringify([...birdData, bird]));
           },
           addFish: (fish) => {
             setFishData([...fishData, fish]);
+            localStorage.setItem("fish", JSON.stringify([...fishData, fish]));
           },
           addMammal: (mammal) => {
             setMammalData([...mammalData, mammal]);
+            localStorage.setItem(
+              "mammal",
+              JSON.stringify([...mammalData, mammal])
+            );
           },
           deleteBird,
           deleteFish,
           deleteMammal,
         }}
       >
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </AnimalContext.Provider>
     </>
   );

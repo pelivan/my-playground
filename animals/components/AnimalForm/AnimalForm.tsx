@@ -19,6 +19,7 @@ import BirdForm from "./BirdForm";
 import FishForm from "./FishForm";
 import MammalForm from "./MammalForm";
 import { AnimalContext } from "../../providers/AnimalContext";
+import { v4 as uuidv4 } from "uuid";
 
 function Form() {
   const [open, setOpenForm] = useState(false);
@@ -27,6 +28,7 @@ function Form() {
   const contextValue = useContext(AnimalContext);
 
   const [animalForm, setAnimalForm] = useState<Bird | Fish | Mammal>({
+    id: "",
     canFly: false,
     isEatable: false,
     colorType: FishColorType.WHITE,
@@ -47,12 +49,12 @@ function Form() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(animalForm);
 
     switch (animalType) {
       case AnimalType.BIRD:
         if (isBird(animalForm)) {
           contextValue.addBird({
+            id: uuidv4(),
             canFly: animalForm.canFly,
             hasFeather: animalForm.hasFeather,
             isDeadly: animalForm.isDeadly,
@@ -66,6 +68,7 @@ function Form() {
       case AnimalType.FISH:
         if (isFish(animalForm)) {
           contextValue.addFish({
+            id: uuidv4(),
             name: animalForm.name,
             isExtinct: animalForm.isExtinct,
             isDeadly: animalForm.isDeadly,
@@ -79,6 +82,7 @@ function Form() {
       case AnimalType.MAMMAL:
         if (isMammal(animalForm)) {
           contextValue.addMammal({
+            id: uuidv4(),
             name: animalForm.name,
             isExtinct: animalForm.isExtinct,
             isDeadly: animalForm.isDeadly,

@@ -1,6 +1,7 @@
 import { FishColorType, FishWaterType } from "./constants";
 
 export interface Animal {
+  id: string;
   name: string;
   isExtinct: boolean;
   isDeadly: boolean;
